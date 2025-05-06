@@ -23,40 +23,39 @@ const LoginPage = ({ setIsLoggedIn }) => {
       alert('Please enter both username and password.');
       return;
     }
-  
+
     try {
-      const response = await axios.post('http://localhost:5000/api/login', {
-        username,
-        password,
-      });
-  
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_BASE_URL}/api/login`,
+        { username, password }
+      );
+
       const user = response.data.user;
-  
+
       localStorage.setItem('userId', user._id);
-      localStorage.setItem('role', user.role); // This matches what's used in App.js
+      localStorage.setItem('role', user.role);
       localStorage.setItem('isLoggedIn', 'true');
-  
+
       if (rememberMe) {
         localStorage.setItem('rememberedUser', username);
       } else {
         localStorage.removeItem('rememberedUser');
       }
-  
+
       setIsLoggedIn(true);
       alert(`${user.role.charAt(0).toUpperCase() + user.role.slice(1)} login successful! Redirecting...`);
-  
+
       if (user.role === 'admin') {
         navigate('/adminDashboard');
       } else {
         navigate('/dashboard');
       }
-  
+
     } catch (err) {
       console.error(err);
       alert(err.response?.data?.message || 'Login failed. Please try again.');
     }
   };
-  
 
   const handleShowSignup = (e) => {
     e.preventDefault();

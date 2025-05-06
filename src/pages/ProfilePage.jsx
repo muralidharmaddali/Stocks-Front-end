@@ -5,7 +5,7 @@ import axios from 'axios';
 const ProfilePage = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true); // Added to track loading state
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -17,7 +17,9 @@ const ProfilePage = () => {
       }
 
       try {
-        const res = await axios.get(`http://localhost:5000/api/users/${userId}`);
+        const res = await axios.get(
+          `${process.env.REACT_APP_API_BASE_URL}/api/users/${userId}`
+        );
         setUser(res.data);
       } catch (err) {
         console.error('Failed to fetch user profile:', err);

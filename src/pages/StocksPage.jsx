@@ -15,7 +15,7 @@ const StocksPage = () => {
 
   const fetchStocks = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/stocks');
+      const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/stocks`);
       console.log("Fetched stock data:", response.data);
 
       const categorized = { books: [], equipment: [], materials: [] };
@@ -36,7 +36,7 @@ const StocksPage = () => {
   const handleRequest = async (item) => {
     try {
       const userId = localStorage.getItem('userId');
-      await axios.post('http://localhost:5000/api/stocks/request', {
+      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/stocks/request`, {
         userId,
         stockId: item._id,
       });
@@ -56,7 +56,6 @@ const StocksPage = () => {
     setSelectedItem(null);
   };
 
-  
   const renderTable = (items) => (
     <table>
       <thead>
@@ -87,7 +86,7 @@ const StocksPage = () => {
     return (
       <div className="description-container">
         <h2>Item Description</h2>
-        <br/>
+        <br />
         <p>{selectedItem.description || 'No description available.'}</p>
         <button className="back-button" onClick={handleGoBack}>Go Back</button>
       </div>

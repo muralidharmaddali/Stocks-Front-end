@@ -8,7 +8,7 @@ const ContactPage = () => {
   useEffect(() => {
     const fetchAdmin = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/users/role/admin');
+        const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/users/role/admin`);
         setAdmin(res.data);
       } catch (err) {
         console.error('Failed to fetch admin info:', err);
